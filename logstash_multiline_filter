@@ -1,0 +1,18 @@
+you have a working Logstash setup
+local logs are written to a file named: /var/log/test.log
+the conversion pattern for log4j/logback/log4j2 is: “%d %p %m%n”
+
+
+2015-03-23 11:11:50,778 INFO Initializing Systems Cache
+2015-03-23 11:11:58,666 ERROR Processing request failed
+kafka.common.FailedToSendMessageException: Failed to send messages after 3 tries.
+    at kafka.producer.async.DefaultEventHandler.handle(DefaultEventHandler.scala:90)
+    at kafka.producer.Producer.send(Producer.scala:77)
+    at kafka.javaapi.producer.Producer.send(Producer.scala:42)
+
+
+Logstash has the ability to parse a log file and merge multiple log lines into a single event. You can do this using either the multiline codec or the multiline filter, depending on the desired effect. A codec is attached to an input and a filter can process events from multiple inputs.
+
+
+NOTE: 
+Logstash used to have a multiline filter as well, but it was removed in version 5.0. The problem was that it wasn’t thread-safe and wasn’t able to handle data from multiple inputs (it wouldn’t know which line belongs to which event).
